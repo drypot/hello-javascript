@@ -1,4 +1,4 @@
-# JavaScript
+# JavaScript ABC
 
 JavaScript 가이드들 읽으며 간단히 메모해 봤습니다. 참고한 문서는,
 
