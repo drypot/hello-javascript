@@ -6,13 +6,16 @@ JavaScript 가이드들 읽으며 간단히 메모해 봤습니다. 참고한 �
 * JavaScript The Good Parts
 
 ECMAScript 5 기준으로 작성했습니다.
+
 IE 8 이하 ECMA 3 환경에서는 es5-shim 라이브러리를 사용해서 ECMA 5 메서드들을 대충이나마 사용할 수 있습니다.
 
 https://github.com/kriskowal/es5-shim
 
 ## Trademark
 
-"JavaScript" is a trademark of Oracle Corporation. It is used under license for technology invented and implemented by Netscape Communications and the Mozilla Foundation.
+"JavaScript" is a trademark of Oracle Corporation.
+
+It is used under license for technology invented and implemented by Netscape Communications and the Mozilla Foundation.
 
 
 ## Compatibiltiy
