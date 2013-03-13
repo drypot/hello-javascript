@@ -1,15 +1,17 @@
 // Creating
 
-var foo = [ 'a', 'b', 'c' ]; // all same
+var foo = [ 'a', 'b', 'c' ];
 var foo = new Array('a', 'b', 'c');
 var foo = Array('a', 'b', 'c');
 
 console.log(foo[0]); // 'a'
 console.log(foo.length); // 3
 
-var foo = new Array(3); // all same
+var foo = new Array(3);
 var foo = Array(3);
 var foo = []; foo.length = 3;
+
+console.log(foo); // [ undefined, undefined, undefined, ]
 
 var foo = [ 'a', , 'c' ];
 
@@ -28,7 +30,7 @@ foo.length = 0;
 console.log(foo); // []
 
 foo.length = 3;
-console.log(foo); // [undefined, undefined, undefined]
+console.log(foo); // [ undefined, undefined, undefined ]
 
 
 // Enumerating
