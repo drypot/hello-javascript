@@ -1,4 +1,4 @@
-// Creating
+// creating
 
 var foo = [ 'a', 'b', 'c' ];
 var foo = new Array('a', 'b', 'c');
@@ -18,7 +18,7 @@ var foo = [ 'a', , 'c' ];
 console.log(foo); // ['a', undefined , 'c']
 
 
-// Length
+// length
 
 var foo = [ 'a', 'b', 'c' ];
 console.log(foo.length); // 3
@@ -33,7 +33,7 @@ foo.length = 3;
 console.log(foo); // [ undefined, undefined, undefined ]
 
 
-// Enumerating
+// enumerating
 
 var colors = [ 'red', 'green', 'blue' ];
 
@@ -73,7 +73,7 @@ console.log([ 1, 2, 3].reduceRight(function(first, second) {
 }, 0)); // 6
 
 
-// Sorting
+// sorting
 
 var arr = [ 52, 97, 3, 62, 10, 63, 64, 1, 9, 3, 4 ];
 
@@ -95,7 +95,7 @@ console.log(arr); // [ 1, 3, 3, 4, 9, 10, 52, 62, 63, 64, 97 ]
 console.log([ 1, 2, 3 ].reverse()); // [ 3, 2, 1 ]
 
 
-// Push, Pop
+// push, pop
 
 var ary = [ 1, 2, 3 ];
 
@@ -116,7 +116,7 @@ console.log(ary.unshift(99)); // length, 4
 console.log(ary); // [ 99, 1, 2, 3 ]
 
 
-// Concat, Slice
+// concat, slice
 
 console.log([ 1, 2, 9 ].concat(4, 5)); // [ 1, 2, 9, 4, 5 ]
 console.log([ 1, 2, 9 ].concat([ 4, 5 ])); // [ 1, 2, 9, 4, 5 ]
@@ -144,7 +144,7 @@ var ary = [ 'a', 'b', 'c', 'd', 'e' ];
 console.log(ary.splice(1, 3, [ 77, 99 ])); // [ 'b', 'c', 'd' ]
 console.log(ary); // [ 'a', [ 77, 99 ], 'e' ]
 
-// Searching
+// searching
 
 console.log([ 'a', 'b', 'a', 'b', 'a' ].indexOf('b')); // 1
 console.log([ 'a', 'b', 'a', 'b', 'a' ].indexOf('b', 2)); // 3
