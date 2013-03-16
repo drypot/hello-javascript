@@ -1,3 +1,12 @@
+// null
+
+console.log(null);                  // null
+console.log('null' in global);      // false, null is keyword
+
+console.log(undefined);             // undefined
+console.log('undefined' in global); // true, undefined is a property of global
+
+
 // creating
 
 var emtpyObj = {};
@@ -135,12 +144,4 @@ var foo = {
 
 delete foo.a;
 console.log(foo); // { b: 20 }
-
-
-// deleting global var
-
-g = 17;
-console.log(g);
-delete g;
-//console.log(g); // ReferenceError: g is not defined
 

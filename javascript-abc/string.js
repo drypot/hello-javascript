@@ -1,10 +1,7 @@
-// all characters in JavaScript are 16 bits wide.
-// there is no character type.
-
 
 // string literal
 
-console.log('abc'); // 'abc'
+console.log('abc'); // 'abc', all characters in JavaScript are 16 bits wide.
 console.log("abc");
 
 console.log('  \"  \'  \\   \/   \b   \f   \n   \r   \t  \377 \xA9 \u00A9  ');
@@ -20,11 +17,12 @@ console.log(42 + ' is the answer'); // '42 is the answer'
 console.log('37' - 7);  // 30
 console.log('37' + 7);  // '377'
 
+
 // string object
 
 console.log(new String('abc')); // { '0': 'a', '1': 'b', '2': 'c' }
 
-console.log('seven'.length); // 5, string literal automatically converted to a temporary String object, and discarded.
+console.log('seven'.length); // 5, string literal automatically converted to a temporary String object.
 
 console.log('abc'.charAt(1));         // 'b'
 console.log('abc'.charCodeAt(1));     // 98
@@ -49,5 +47,10 @@ console.log('01234'.slice(2, -1));  // '23'
 console.log('01234'.slice(-2, -1)); // '3'
 console.log('01234'.slice(-2));     // '34'
 
+console.log('01234'.substring(2, 4)); // '23', DO NOT USE THIS, USE slice.
+console.log('01234'.substr(2, 2));    // '23', DO NOT USE THIS, USE slice.
 
 console.log('cat'.toUpperCase()); // 'CAT'
+console.log('DOG'.toLowerCase()); // 'dog'
+
+// for match, search, replace, see regexp.js.

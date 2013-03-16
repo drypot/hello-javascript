@@ -1,9 +1,10 @@
 # JavaScript ABC
 
-JavaScript 가이드들 읽으며 간단히 메모해 봤습니다. 참고한 문서는,
+JavaScript 공부하면서 만든 테스트 코드들입니다. 참고한 문서는,
 
 * https://developer.mozilla.org/en-US/docs/JavaScript
 * JavaScript The Good Parts
+* Secrets of the JavaScript Ninja
 
 ECMAScript 5 기준으로 작성했습니다.
 
