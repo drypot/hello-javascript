@@ -1,6 +1,6 @@
 # JavaScript ABC
 
-JavaScript 공부하면서 만든 테스트 코드들입니다. 참고한 문서는,
+JavaScript 언어 기본 공부하면서 만든 테스트 코드들입니다. 참고한 문서는,
 
 * https://developer.mozilla.org/en-US/docs/JavaScript
 * JavaScript The Good Parts
