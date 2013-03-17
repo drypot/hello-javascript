@@ -1,6 +1,5 @@
 var assert = require('assert');
 
-
 // function
 
 function returnNothing() {
@@ -45,6 +44,39 @@ var factorial = function fac(n) { //
 assert.equal(factorial(3), 6);
 
 
+// this
+
+function funcInvoc() {
+	return this;
+}
+
+assert.equal(funcInvoc(), global);
+
+var foo = {
+	methodInvoc1: function () {
+		return this;
+	},
+	methodInvoc2: function () {
+		function inner() {
+			return this;
+		}
+		return inner();
+	},
+	methodInvoc3: function () {
+		var _this = this;
+		function inner() {
+			return _this;
+		}
+		return inner();
+	}
+}
+
+assert.equal(foo.methodInvoc1(), foo);
+assert.equal(foo.methodInvoc2(), global);
+assert.equal(foo.methodInvoc3(), foo);
+
+
+
 // function as arguments
 
 function mother(a, fn) {
@@ -56,18 +88,6 @@ function gift(a) {
 }
 
 assert.equal(mother(10, gift), 100);
-
-
-// closures are created when the inner function made available to outside of the outer function.
-
-function outer(name) {
-	function inner() {
-		return name + name + name;
-	}
-	return inner;
-}
-
-assert.equal(outer('abc')(), 'abcabcabc');
 
 
 // arguments are maintained in an array-like object.
@@ -90,6 +110,19 @@ function passArg() {
 }
 
 assert.deepEqual(passArg('d', 'e', 'f'), [ 'd', 'e', 'f' ]);
+
+
+// closures are created when the inner function made available to outside of the outer function.
+
+function outer(name) {
+	function inner() {
+		return name + name + name;
+	}
+	return inner;
+}
+
+assert.equal(outer('abc')(), 'abcabcabc');
+
 
 
 // function declaration can be below the call
