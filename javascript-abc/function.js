@@ -46,23 +46,23 @@ assert.equal(factorial(3), 6);
 
 // this
 
-function funcInvoc() {
+function func() {
 	return this;
 }
 
-assert.equal(funcInvoc(), global);
+assert.equal(func(), global);
 
 var foo = {
-	methodInvoc1: function () {
+	method1: function () {
 		return this;
 	},
-	methodInvoc2: function () {
+	method2: function () {
 		function inner() {
 			return this;
 		}
 		return inner();
 	},
-	methodInvoc3: function () {
+	method3: function () {
 		var _this = this;
 		function inner() {
 			return _this;
@@ -71,9 +71,15 @@ var foo = {
 	}
 }
 
-assert.equal(foo.methodInvoc1(), foo);
-assert.equal(foo.methodInvoc2(), global);
-assert.equal(foo.methodInvoc3(), foo);
+assert.equal(foo.method1(), foo);
+assert.equal(foo.method2(), global);
+assert.equal(foo.method3(), foo);
+
+var Constructor = function () {
+	this.x = 10;
+}
+
+assert.equal(new Constructor().x, 10);
 
 
 
