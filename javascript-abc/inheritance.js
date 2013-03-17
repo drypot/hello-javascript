@@ -1,8 +1,69 @@
-// inheritance
+
+
+// prototype of empty object
+
+var emptyObj = {};
+
+
+
+// prototype of constructed object
+
+function Super() {
+	this.superProp = 'from super';
+}
+
+var su = new Super();
+
+console.log(su.__proto__ === Object.prototype); // false
+
+
+function Sub() {
+	this.subProp = 'from sub';
+}
+
+Sub.prototype = new Super();
+
+var sub = new Sub();
+
+console.log(sub.__proto__ === Sub.prototype); // true
+console.log(sub instanceof Sub);              // true, shortcut
+
+
+//
+
+for (var p in sub) {
+	console.log(p); // 'subProp', 'superProp'
+}
+
+for (var p in sub) {
+	if (sub.hasOwnProperty(p)) {
+		console.log(p); // 'subProp'
+	}
+}
+
+
+//
+
+sub.superProp = 'from sub';
+
+for (var p in sub) {
+	if (sub.hasOwnProperty(p)) {
+		console.log(p); // 'subProp', 'superProp'
+	}
+}
+
+console.log(sub.superProp); // 'from sub';
+console.log(sub.__proto__.superProp); // 'from super'
+
+
+
+
+
+// http://ejohn.org/blog/simple-javascript-inheritance/
 
 (function () {
 
-	// http://ejohn.org/blog/simple-javascript-inheritance/
+
 
 	var initializing = false,
 		superPattern = /xyz/.test(function () { xyz; }) ? /\b_super\b/ : /.*/;

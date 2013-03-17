@@ -1,0 +1,20 @@
+{
+  "name": "javascript-study",
+  "version": "0.0.0",
+  "description": "자바스크립트 공부하면서 만든 테스트 코드들입니다.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drypot/javascript-study.git"
+  },
+  "author": "drypot",
+  "license": "MIT",
+  "readmeFilename": "readme.md",
+  "gitHead": "b752a19abc888c627d01278e18ddbb22556beeeb",
+  "dependencies": {
+    "should": "~1.2.2"
+  }
+}

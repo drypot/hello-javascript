@@ -1,22 +1,26 @@
+var assert = require('assert');
+
 // null
 
-console.log(null);                  // null
-console.log('null' in global);      // false, null is keyword
+assert.equal(null + '', 'null');
+assert.equal('null' in global, false, 'null is keyword');
 
-console.log(undefined);             // undefined
-console.log('undefined' in global); // true, undefined is a property of global
+assert.equal(undefined + '', 'undefined');
+assert.equal('undefined' in global, true, 'undefined is a property of global');
 
 
-// creating
+// empty object
 
-var emtpyObj = {};
+var emptyObj = {};
 
-var foo = {
-	a: 10,
-	b: 20
-};
+assert.equal(emptyObj.__proto__, Object.prototype);
 
-console.log(foo.a); // 10
+
+// object literal
+
+var foo = { a: 10, b: 20 };
+
+assert(foo.a === 10);
 
 
 // constructor
@@ -28,7 +32,7 @@ function Foo(a, b) {
 
 var foo = new Foo(10, 20);
 
-console.log(foo); // { a: 10, b: 20, }
+assert.deepEqual(foo, { a: 10, b: 20 });
 
 
 // properties
@@ -39,48 +43,41 @@ foo.type = 'dot syntax';
 foo['date created'] = 'string with space';
 foo[''] = 'even an empty string';
 
-console.log(foo);
-//	{
-//		type: 'dot syntax',
-//		'date created': 'string with space',
-//		'': 'even an empty string'
-//	};
+assert.deepEqual(foo, {
+	type: 'dot syntax',
+	'date created': 'string with space',
+	'': 'even an empty string'
+});
 
 
-// Object.create ...
+// safely accessing properties
+
+var foo = {};
+
+assert.equal(foo.missed, undefined);
+assert.equal(foo.missed || 'default', 'default');
+
+var foo = undefined;
+
+assert.throws(function () { foo.prop; });
+assert.equal(foo && foo.prop, undefined);
+
+
+// TODO: Object.create
+
 
 // enumerating properties
 
-var foo = {
-	a: 10,
-	b: 'bbb'
-}
+var foo = { a: 10, b: 20 };
+var r = '';
 
 for (var i in foo) {
-	console.log(i); // 'a', 'b'
+	r += i;
 }
 
-var bar = {
-	c: 'xyz'
-};
+assert.equal(r, 'ab');
 
-bar.__proto__ = foo;
-
-for (var i in bar) {
-	console.log(i); // 'c', 'a', 'b'
-}
-
-for (var i in bar) {
-	if (bar.hasOwnProperty(i)) {
-		console.log(i); // 'c'
-	}
-}
-
-console.log(Object.keys(foo)); // [ 'a', 'b' ]
-console.log(Object.keys(bar)); // [ 'c' ]
-
-
-// prototype ...
+assert.deepEqual(Object.keys(foo), [ 'a', 'b' ]);
 
 
 // method
@@ -88,28 +85,25 @@ console.log(Object.keys(bar)); // [ 'c' ]
 var foo = {
 	f: function () {
 		this.a = 10;
-		console.log('hi');
 	}
 };
 
-console.log(foo.a); // undefined
-foo.f(); // 'hi'
-console.log(foo.a); // 10
+foo.f();
+assert.equal(foo.a, 10);
 
 
-// method on constructor
-
-var goodDay = function () {
-	return 'good day';
-}
+// method on prototype
 
 var Foo = function () {
-	this.goodDay = goodDay;
+}
+
+Foo.prototype.goodDay = function () {
+	return 'good day';
 }
 
 var foo = new Foo();
 
-console.log(foo.goodDay()); // 'good day'
+assert.equal(foo.goodDay(), 'good day');
 
 
 // getters, setters
@@ -124,24 +118,21 @@ var foo = {
 	}
 };
 
-console.log(foo.a); // 7
-console.log(foo.b); // 8
-//console.log(foo.c); // undefined
+assert.equal(foo.a, 7);
+assert.equal(foo.b, 8);
+//assert.equal(foo.c, undefined);
 
 foo.c = 20;
 
-console.log(foo.a); // 10
-console.log(foo.b); // 11
-//console.log(foo.c); // undefined
+assert.equal(foo.a, 10);
+assert.equal(foo.b, 11);
+//assert.equal(foo.c, undefined);
 
 
 // deleting property
 
-var foo = {
-	a: 10,
-	b: 20
-};
+var foo = { a: 10, b: 20 };
 
 delete foo.a;
-console.log(foo); // { b: 20 }
+assert.deepEqual(foo, { b: 20 });
 
