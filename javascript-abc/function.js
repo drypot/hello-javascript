@@ -1,10 +1,14 @@
+var assert = require('assert');
+
+
 // function
 
 function returnNothing() {
 	return;
 }
 
-console.log(returnNothing()); // undefined
+assert.equal(returnNothing(), undefined);
+assert.equal(returnNothing.__proto__, Function.prototype);
 
 
 // function with parameter
@@ -13,14 +17,14 @@ function square(number) {
 	return number * number;
 }
 
-console.log(square(10)); // 100
+assert.equal(square(10), 100);
 
 
 // if you like inefficiency.
 
 var slow = new Function('a', 'return a * a * a;');
 
-console.log(slow(2)); // 8
+assert.equal(slow(2), 8);
 
 
 // anonymous function
@@ -29,7 +33,7 @@ var squareAnony = function (number) {
 	return number * number
 };
 
-console.log(squareAnony(7)); // 49
+assert.equal(squareAnony(7), 49);
 
 
 // named anonymous function to refer itself
@@ -38,7 +42,7 @@ var factorial = function fac(n) { //
 	return n < 2 ? 1 : n * fac(n - 1);
 };
 
-console.log(factorial(3)); // 6
+assert.equal(factorial(3), 6);
 
 
 // function as arguments
@@ -51,7 +55,7 @@ function gift(a) {
 	return a * 10;
 }
 
-console.log(mother(10, gift)); // 20
+assert.equal(mother(10, gift), 100);
 
 
 // closures are created when the inner function made available to outside of the outer function.
@@ -63,32 +67,34 @@ function outer(name) {
 	return inner;
 }
 
-console.log(outer('abc')()); // 'abcabcabc'
+assert.equal(outer('abc')(), 'abcabcabc');
 
 
 // arguments are maintained in an array-like object.
 
 function printArg() {
+	var r = [];
 	for (var i = 0; i < arguments.length; i++) {
-		console.log(arguments[i]);
+		r.push(arguments[i]);
 	}
+	return r;
 }
 
-printArg('a', 'b', 'c'); // a, b, c
+assert.deepEqual(printArg('a', 'b', 'c'), [ 'a', 'b', 'c' ]);
 
 
 // passing arguments through
 
 function passArg() {
-	printArg.apply(this, arguments);
+	return printArg.apply(this, arguments);
 }
 
-passArg('d', 'e', 'f'); // d, e, f
+assert.deepEqual(passArg('d', 'e', 'f'), [ 'd', 'e', 'f' ]);
 
 
 // function declaration can be below the call
 
-console.log(funcBelow());
+assert.equal(funcBelow(), 'below');
 
 function funcBelow(){
 	return 'below';
@@ -105,4 +111,4 @@ if (true){
 
 // dump function source
 
-console.log(passArg.toString());
+assert.equal(typeof passArg.toString(), 'string');

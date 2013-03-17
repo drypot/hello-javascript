@@ -117,6 +117,9 @@ for (var p in sub) {
 
 assert.deepEqual(r, [ 'subX', 'superX' ]);
 
+
+// enumerating own properties
+
 var r = [];
 
 for (var p in sub) {
@@ -128,6 +131,20 @@ for (var p in sub) {
 assert.deepEqual(r, [ 'subX' ]);
 
 assert.deepEqual(Object.keys(sub), [ 'subX' ]);
+
+
+// enumerating properties selectively
+
+var obj = { a: 10, b: 20, c: 30 };
+var pl = [ 'b', 'c' ];
+var r = [];
+
+for (var i = 0; i < pl.length; i ++) {
+	r.push(pl[i]);
+	r.push(obj[pl[i]]);
+}
+
+assert.deepEqual(r, [ 'b', 20, 'c', 30 ]);
 
 
 // method on object local
