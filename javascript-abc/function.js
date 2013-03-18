@@ -1,6 +1,6 @@
 var assert = require('assert');
 
-// function
+// creating function
 
 function returnNothing() {
 	return;
@@ -9,9 +9,6 @@ function returnNothing() {
 assert.equal(returnNothing(), undefined);
 assert.equal(returnNothing.__proto__, Function.prototype);
 
-
-// function with parameter
-
 function square(number) {
 	return number * number;
 }
@@ -19,14 +16,26 @@ function square(number) {
 assert.equal(square(10), 100);
 
 
-// if you like inefficiency.
+// creating function with closure
+
+var xyAdder = function (x) {
+	var y = 20;
+	return function () {
+		return x + y;
+	};
+}
+
+assert.equal(xyAdder(10)(), 30);
+
+
+// creating function with constructor, inefficient.
 
 var slow = new Function('a', 'return a * a * a;');
 
 assert.equal(slow(2), 8);
 
 
-// anonymous function
+// creating anonymous function
 
 var squareAnony = function (number) {
 	return number * number
@@ -134,46 +143,6 @@ function passArg() {
 
 assert.deepEqual(passArg('d', 'e', 'f'), [ 'd', 'e', 'f' ]);
 
-
-// closure, created when the inner function exposed to outside of the outer.
-
-function outer(name) {
-	function inner() {
-		return name + name + name;
-	}
-	return inner;
-}
-
-var inner = outer('abc');
-
-assert.equal(inner(), 'abcabcabc');
-
-
-// composing object with literal
-
-var obj = {
-	x : 10,
-	getX: function () {
-		return this.x;
-	}
-};
-
-assert.equal(obj.getX(), 10);
-
-
-// composing object with closure
-
-var obj = (function () {
-	var x = 20;
-
-	return {
-		getX: function () {
-			return x;
-		}
-	}
-})();
-
-assert.equal(obj.getX(), 20);
 
 
 // function declaration can be below the call

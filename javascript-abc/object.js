@@ -14,28 +14,54 @@ assert.equal('undefined' in global, true, 'undefined is a property of global');
 var emptyObj = {};
 
 
-// object literal
+// creating object with literal
 
-var foo = { a: 10, b: 20 };
+var obj = {
+	x: 10,
+	getX: function () {
+		return this.x + 1;
+	}
+};
 
-assert(foo.a === 10);
+assert.equal(obj.x, 10);
+assert.equal(obj.getX(), 11);
 
 
-// constructor
+// creating object with constructor
 
-function Pair(a, b) {
-	this.a = a;
-	this.b = b;
+function Obj() {
+	this.x = 20;
 }
 
-var pair = new Pair(10, 20);
+Obj.prototype.getX = function () {
+	return this.x + 1;
+};
 
-assert.deepEqual(pair, { a: 10, b: 20 });
+var obj = new Obj();
+
+assert.equal(obj.x, 20);
+assert.equal(obj.getX(), 21);
 
 
-// Object.create
+// creating object with closure
 
-// DO NOT USE, very slow on Chrome ~26.
+var obj = (function () {
+	var x = 30;
+
+	return {
+		getX: function () { // 당연하게도 클로져를 만들려면 내부 함수 정의를 외부 함수 안에 노출해야 한다.
+			return x + 1;   // getX: globalGetX, 식으로 안 된다는 말.
+		}                   // 그러므로 오브젝트를 생성할 때마다 클로져 붙은 함수 오브젝트도 생성해야 한다.
+	}
+})();
+
+//assert.equal(obj.x, 20); // throws Error
+assert.equal(obj.getX(), 31);
+
+
+// creating object with Object.create
+
+// very slow on Chrome ~26.
 // http://jsperf.com/create-new/2
 
 
@@ -45,6 +71,27 @@ var emptyObj = {};
 
 assert.equal(emptyObj.__proto__, Object.prototype);
 
+
+var su = {
+	a: 10,
+	b: 20
+};
+
+var sub = {
+	b: 30,
+	__proto__: su
+};
+
+assert.equal(sub.a, 10);
+assert.equal(sub.b, 30);
+
+sub.a = 50;
+
+assert.equal(sub.a, 50);
+assert.equal(su.a, 10);
+
+
+// prototype with constructor
 
 function Super() {
 	this.superX = 'super';
@@ -56,25 +103,13 @@ function Sub() {
 
 Sub.prototype = new Super();
 
-
 var su = new Super();
 var sub = new Sub();
 
-assert.notEqual(su.__proto__, Object.prototype);
 assert.equal(sub.__proto__, Sub.prototype);
 
 assert.ok(sub instanceof Sub);
 assert.ok(sub instanceof Super);
-
-assert.equal(sub.subX, 'sub');
-assert.equal(sub.superX, 'super');
-
-// prototype link is used only in retrieval.
-
-sub.superX = 'sub';
-
-assert.equal(sub.superX, 'sub');
-assert.equal(sub.__proto__.superX, 'super');
 
 
 // properties
