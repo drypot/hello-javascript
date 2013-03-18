@@ -16,18 +16,6 @@ function square(number) {
 assert.equal(square(10), 100);
 
 
-// creating function with closure
-
-var xyAdder = function (x) {
-	var y = 20;
-	return function () {
-		return x + y;
-	};
-}
-
-assert.equal(xyAdder(10)(), 30);
-
-
 // creating function with constructor, inefficient.
 
 var slow = new Function('a', 'return a * a * a;');
@@ -53,7 +41,19 @@ var factorial = function fac(n) { //
 assert.equal(factorial(3), 6);
 
 
-// function invocation pattern
+// creating function with closure
+
+var xyAdder = function (x) {
+	var y = 20;
+	return function () {
+		return x + y;
+	};
+}
+
+assert.equal(xyAdder(10)(), 30);
+
+
+// this in normal function
 
 function func() {
 	return this;
@@ -62,7 +62,7 @@ function func() {
 assert.equal(func(), global);
 
 
-// constructor invocation pattern
+// this in constructor
 
 var Constructor = function () {
 	this.x = 10;
@@ -71,7 +71,7 @@ var Constructor = function () {
 assert.equal(new Constructor().x, 10);
 
 
-// method invocation pattern
+// this in method
 
 var foo = {
 	method1: function () {
@@ -97,9 +97,9 @@ assert.equal(foo.method2(), global);
 assert.equal(foo.method3(), foo);
 
 
-// apply invocation pattern
+// this on apply invocation
 
-var xy = { x:10, y :20 };
+var xy = { x: 10, y: 20 };
 
 var sumXyCd = function (c, d) {
 	return this.x + this.y + c + d;
@@ -124,7 +124,7 @@ assert.equal(mother(10, gift), 100);
 
 // arguments are maintained in an array-like object.
 
-function printArg() {
+function print() {
 	var r = [];
 	for (var i = 0; i < arguments.length; i++) {
 		r.push(arguments[i]);
@@ -132,16 +132,16 @@ function printArg() {
 	return r;
 }
 
-assert.deepEqual(printArg('a', 'b', 'c'), [ 'a', 'b', 'c' ]);
+assert.deepEqual(print('a', 'b', 'c'), [ 'a', 'b', 'c' ]);
 
 
 // passing arguments through
 
-function passArg() {
-	return printArg.apply(this, arguments);
+function pass() {
+	return print.apply(this, arguments);
 }
 
-assert.deepEqual(passArg('d', 'e', 'f'), [ 'd', 'e', 'f' ]);
+assert.deepEqual(pass('d', 'e', 'f'), [ 'd', 'e', 'f' ]);
 
 
 
@@ -164,7 +164,7 @@ if (true){
 
 // dump function source
 
-assert.equal(typeof passArg.toString(), 'string');
+assert.equal(typeof pass.toString(), 'string');
 
 
 // function object creation
