@@ -44,13 +44,25 @@ var factorial = function fac(n) { //
 assert.equal(factorial(3), 6);
 
 
-// this
+// function invocation pattern
 
 function func() {
 	return this;
 }
 
 assert.equal(func(), global);
+
+
+// constructor invocation pattern
+
+var Constructor = function () {
+	this.x = 10;
+}
+
+assert.equal(new Constructor().x, 10);
+
+
+// method invocation pattern
 
 var foo = {
 	method1: function () {
@@ -75,12 +87,17 @@ assert.equal(foo.method1(), foo);
 assert.equal(foo.method2(), global);
 assert.equal(foo.method3(), foo);
 
-var Constructor = function () {
-	this.x = 10;
+
+// apply invocation pattern
+
+var xy = { x:10, y :20 };
+
+var sumXyCd = function (c, d) {
+	return this.x + this.y + c + d;
 }
 
-assert.equal(new Constructor().x, 10);
-
+assert.equal(sumXyCd.apply(xy, [ 30, 40 ]), 100);
+assert.equal(sumXyCd.call(xy, 30, 40), 100);
 
 
 // function as arguments
@@ -118,7 +135,7 @@ function passArg() {
 assert.deepEqual(passArg('d', 'e', 'f'), [ 'd', 'e', 'f' ]);
 
 
-// closures are created when the inner function made available to outside of the outer function.
+// closure, created when the inner function exposed to outside of the outer.
 
 function outer(name) {
 	function inner() {
@@ -127,8 +144,36 @@ function outer(name) {
 	return inner;
 }
 
-assert.equal(outer('abc')(), 'abcabcabc');
+var inner = outer('abc');
 
+assert.equal(inner(), 'abcabcabc');
+
+
+// composing object with literal
+
+var obj = {
+	x : 10,
+	getX: function () {
+		return this.x;
+	}
+};
+
+assert.equal(obj.getX(), 10);
+
+
+// composing object with closure
+
+var obj = (function () {
+	var x = 20;
+
+	return {
+		getX: function () {
+			return x;
+		}
+	}
+})();
+
+assert.equal(obj.getX(), 20);
 
 
 // function declaration can be below the call
@@ -151,3 +196,30 @@ if (true){
 // dump function source
 
 assert.equal(typeof passArg.toString(), 'string');
+
+
+// function object creation
+
+var r1 = [];
+var r2 = [];
+var r3 = [];
+
+function makeFunction() {
+
+	function inner1() {
+	}
+
+	var inner2 = function () {
+	}
+
+	r1.push(inner1);
+	r2.push(inner2);
+	r3.push(makeFunction);
+}
+
+makeFunction();
+makeFunction();
+
+assert.notEqual(r1[0], r1[1]);
+assert.notEqual(r2[0], r2[1]);
+assert.equal(r3[0], r3[1]);
