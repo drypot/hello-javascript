@@ -144,6 +144,22 @@ function pass() {
 assert.deepEqual(pass('d', 'e', 'f'), [ 'd', 'e', 'f' ]);
 
 
+// memoization
+
+var sum = (function () {
+	var memo = [0];
+	return function sum(n) {
+		var result = memo[n];
+		if (typeof result !== 'number') {
+			memo[n] = result = n + sum(n-1);
+		}
+		return result;
+	};
+}());
+
+assert.equal(sum(0), 0);
+assert.equal(sum(3), 6);
+
 
 // function declaration can be below the call
 

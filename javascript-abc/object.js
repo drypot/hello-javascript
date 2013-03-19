@@ -9,12 +9,12 @@ assert.equal(undefined + '', 'undefined');
 assert.equal('undefined' in global, true, 'undefined is a property of global');
 
 
-// empty object
-
-var emptyObj = {};
-
-
 // creating object with literal
+
+var obj = {};
+
+assert.equal(obj.__proto__, Object.prototype);
+
 
 var obj = {
 	x: 10,
@@ -27,10 +27,29 @@ assert.equal(obj.x, 10);
 assert.equal(obj.getX(), 11);
 
 
+var proto = {
+	x: 10,
+	y: 20
+};
+
+var obj = {
+	x: 30,
+	__proto__: proto
+};
+
+assert.equal(obj.x, 30);
+assert.equal(obj.y, 20);
+
+obj.y = 50;
+
+assert.equal(obj.y, 50);
+assert.equal(proto.y, 20);
+
+
 // creating object with constructor
 
-function Obj() {
-	this.x = 20;
+var Obj = function () {
+	this.x = 10;
 }
 
 Obj.prototype.getX = function () {
@@ -39,23 +58,42 @@ Obj.prototype.getX = function () {
 
 var obj = new Obj();
 
-assert.equal(obj.x, 20);
-assert.equal(obj.getX(), 21);
+assert.equal(Obj.prototype.constructor, Obj);
+assert.equal(obj.__proto__, Obj.prototype);
+
+assert.equal(obj.x, 10);
+assert.equal(obj.getX(), 11);
+
+
+var Proto = function () {
+	this.x = 10;
+	this.y = 20;
+}
+
+var Obj = function () {
+	this.x = 30;
+}
+
+Obj.prototype = new Proto();
+
+var obj = new Obj();
+
+assert.ok(obj instanceof Obj);
+assert.ok(obj instanceof Proto);
 
 
 // creating object with closure
 
 var obj = (function () {
-	var x = 30;
+	var x = 30; // x is hidden
 
 	return {
-		getX: function () { // 당연하게도 클로져를 만들려면 내부 함수 정의를 외부 함수 안에 노출해야 한다.
-			return x + 1;   // getX: globalGetX, 식으로 안 된다는 말.
-		}                   // 그러므로 오브젝트를 생성할 때마다 클로져 붙은 함수 오브젝트도 생성해야 한다.
+		getX: function () {
+			return x + 1;
+		}
 	}
 })();
 
-//assert.equal(obj.x, 20); // throws Error
 assert.equal(obj.getX(), 31);
 
 
@@ -63,53 +101,6 @@ assert.equal(obj.getX(), 31);
 
 // very slow on Chrome ~26.
 // http://jsperf.com/create-new/2
-
-
-// prototype
-
-var emptyObj = {};
-
-assert.equal(emptyObj.__proto__, Object.prototype);
-
-
-var su = {
-	a: 10,
-	b: 20
-};
-
-var sub = {
-	b: 30,
-	__proto__: su
-};
-
-assert.equal(sub.a, 10);
-assert.equal(sub.b, 30);
-
-sub.a = 50;
-
-assert.equal(sub.a, 50);
-assert.equal(su.a, 10);
-
-
-// prototype with constructor
-
-function Super() {
-	this.superX = 'super';
-}
-
-function Sub() {
-	this.subX = 'sub';
-}
-
-Sub.prototype = new Super();
-
-var su = new Super();
-var sub = new Sub();
-
-assert.equal(sub.__proto__, Sub.prototype);
-
-assert.ok(sub instanceof Sub);
-assert.ok(sub instanceof Super);
 
 
 // properties
@@ -142,30 +133,24 @@ assert.equal(foo && foo.prop, undefined);
 
 // enumerating properties
 
-var sub = new Sub();
+var obj = { x: 30, __proto__: { x: 10, y: 20 }};
 
 var r = [];
-
-for (var p in sub) {
+for (var p in obj) {
 	r.push(p);
 }
 
-assert.deepEqual(r, [ 'subX', 'superX' ]);
-
-
-// enumerating own properties
+assert.deepEqual(r, [ 'x', 'y' ]);
 
 var r = [];
-
-for (var p in sub) {
-	if (sub.hasOwnProperty(p)) {
+for (var p in obj) {
+	if (obj.hasOwnProperty(p)) {
 		r.push(p);
 	}
 }
 
-assert.deepEqual(r, [ 'subX' ]);
-
-assert.deepEqual(Object.keys(sub), [ 'subX' ]);
+assert.deepEqual(r, [ 'x' ]);
+assert.deepEqual(Object.keys(obj), [ 'x' ]);
 
 
 // enumerating properties selectively
@@ -184,34 +169,34 @@ assert.deepEqual(r, [ 'b', 20, 'c', 30 ]);
 
 // method on object local
 
-var foo = {
+var obj = {
 	f: function () {
 		this.a = 10;
 	}
 };
 
-foo.f();
-assert.equal(foo.a, 10);
+obj.f();
+assert.equal(obj.a, 10);
 
 
 // method on prototype
 
-var Foo = function (name) {
+var Obj = function (name) {
 	this.name = name;
 }
 
-Foo.prototype.goodDay = function () {
+Obj.prototype.goodDay = function () {
 	return this.name + ', good day';
 }
 
-var foo = new Foo('dave');
+var obj = new Obj('dave');
 
-assert.equal(foo.goodDay(), 'dave, good day');
+assert.equal(obj.goodDay(), 'dave, good day');
 
 
 // getters, setters
 
-var foo = {
+var obj = {
 	a: 5,
 	get b() {
 		return this.a + 1;
@@ -221,23 +206,23 @@ var foo = {
 	}
 };
 
-assert.equal(foo.a, 5);
-assert.equal(foo.b, 6);
-//assert.equal(foo.c, undefined);
+assert.equal(obj.a, 5);
+assert.equal(obj.b, 6);
+//assert.equal(obj.c, undefined);
 
-foo.c = 20;
+obj.c = 20;
 
-assert.equal(foo.a, 10);
-assert.equal(foo.b, 11);
-//assert.equal(foo.c, undefined);
+assert.equal(obj.a, 10);
+assert.equal(obj.b, 11);
+//assert.equal(obj.c, undefined);
 
 
 // deleting property
 
-var foo = { a: 10, b: 20 };
+var obj = { a: 10, b: 20 };
 
-delete foo.a;
-assert.deepEqual(foo, { b: 20 });
+delete obj.a;
+assert.deepEqual(obj, { b: 20 });
 
 
 
