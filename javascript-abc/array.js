@@ -37,6 +37,12 @@ assert.equal(a[2], 'c');
 assert.equal(a.length, 3);
 
 
+// is array ?
+
+assert.equal(typeof [], 'object');
+assert.equal(Object.prototype.toString.apply([]), '[object Array]');
+
+
 // length
 
 var a = [ 'a', 'b', 'c' ];
