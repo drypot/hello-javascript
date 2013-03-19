@@ -71,36 +71,22 @@ assert.deepEqual('xxyyzz'.split(/y+/), [ 'xx', 'zz' ]);
 
 // pattern
 
-//	/abc/ :
+
+// regexp factor
+
+//	a : character
 //
-//	\ : special -> not special, not special -> special
+//	(x) : group, matche x and remember it.
 //
-//	^ : beginning of input, immediately after a line break.
+
+//	\0 : \u0000
 //
-//	$ : end of input, immediately before a line break.
+//	\0377 : octal
 //
-//	x* : 0 or more times of x.
+//	\xAF :
 //
-//	x+ : 1 or more times of x.
-//
-//	x? : 0 or 1 time of x.
-//
-//	x{n} : exactly n occurrences of x.
-//
-//	x{n,m} :
-//
-//	. : any single character except the newline.
-//
-//	(x) : matche x and remember it.
-//
-//	(?:x) : matche x but do not remember.
-//
-//	x(?=y) : lookahead. matche x only if x is followed by y.
-//
-//	x(?!y) : negated lookahead.
-//
-//	x|y : x or y
-//
+//	\u0041 :
+
 //	[abc] : any enclosed character. special characters do not have any special meaning.
 //
 //	[a-d] : [abcd]
@@ -136,13 +122,42 @@ assert.deepEqual('xxyyzz'.split(/y+/), [ 'xx', 'zz' ]);
 //	\w : [A-Za-z0-9_]
 //
 //	\W : [^A-Za-z0-9_]
+
+
+
+//	^ : beginning of input, immediately after a line break.
+//
+//	$ : end of input, immediately before a line break.
+//
+//	x* : 0 or more times of x.
+//
+//	x+ : 1 or more times of x.
+//
+//	x? : 0 or 1 time of x.
+//
+//	x{n} : exactly n occurrences of x.
+//
+//	x{n,m} :
+//
+//	. : any single character except the newline.
+//
+//
+//	(?:x) : matche x but do not remember.
+//
+//	x(?=y) : lookahead. matche x only if x is followed by y.
+//
+//	x(?!y) : negated lookahead.
+//
+//	x|y : x or y
+//
 //
 //	...(x)...\1... : back reference
 //
-//	\0 : \u0000
-//
-//	\0377 : octal
-//
-//	\xAF :
-//
-//	\u0041 :
+
+
+// sample
+
+// URL 파서. 괴상한 문자들 처리에 완벽하진 않다. 참고만.
+var parseUrl = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/;
+
+var parseNumber = /^-?\d+(?:\.\d*)?(?:e[+\-]?\d+)?$/i;
