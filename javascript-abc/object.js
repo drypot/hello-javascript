@@ -105,13 +105,13 @@ assert.equal(obj.getX(), 31);
 
 // properties
 
-var foo = {};
+var obj = {};
 
-foo.type = 'dot syntax';
-foo['date created'] = 'string with space';
-foo[''] = 'even an empty string';
+obj.type = 'dot syntax';
+obj['date created'] = 'string with space';
+obj[''] = 'even an empty string';
 
-assert.deepEqual(foo, {
+assert.deepEqual(obj, {
 	type: 'dot syntax',
 	'date created': 'string with space',
 	'': 'even an empty string'
@@ -120,15 +120,15 @@ assert.deepEqual(foo, {
 
 // safely accessing properties
 
-var foo = {};
+var obj = {};
 
-assert.equal(foo.missed, undefined);
-assert.equal(foo.missed || 'default', 'default');
+assert.equal(obj.missed, undefined);
+assert.equal(obj.missed || 'default', 'default');
 
-var foo = undefined;
+var obj = undefined;
 
-assert.throws(function () { foo.prop; });
-assert.equal(foo && foo.prop, undefined);
+assert.throws(function () { obj.prop; });
+assert.equal(obj && obj.prop, undefined);
 
 
 // enumerating properties
