@@ -109,20 +109,20 @@ assert.equal(/\./.test('.'), true); // special characters : \ / [ ] ( ) { } ? + 
 
 assert.equal(/\f\n\r\t\v/.test('\f\n\r\t\v'), true);
 
-assert.equal(/\bcd/.test('ab cd'), true); // \b : word boundary, USELESS for multilingual applications
+assert.equal(/\bcd/.test('ab cd'), true); // word boundary, USELESS for multilingual applications
 assert.equal(/\bcd/.test('abcd'), false);
 assert.equal(/\Bcd/.test('abcd'), true);
 
-assert.equal(/\d+/.test('123'), true); // \d : [0-9]
+assert.equal(/\d+/.test('123'), true); // [0-9]
 assert.equal(/\D+/.test('abc'), true);
 
-assert.equal(/\s+/.test(' \n\t'), true); // \s : [\f\n\r\t\u000B\u0020\u00A0\u2028\u2029], partial of Unicode whitespaces.
+assert.equal(/\s+/.test(' \n\t'), true); // [\f\n\r\t\u000B\u0020\u00A0\u2028\u2029], partial of unicode whitespaces.
 assert.equal(/\S+/.test('abc'), true);
 
-assert.equal(/\w+/.test('0A_'), true); // \w : [0-9A-Z_a-z]
+assert.equal(/\w+/.test('0A_'), true); // [0-9A-Z_a-z]
 assert.equal(/\W+/.test('-!@'), true);
 
-assert.equal(/\cJ/.test('\n'), true); // \cA ~ \cZ : control character
+assert.equal(/\cJ/.test('\n'), true); // control character
 
 // group
 
@@ -157,15 +157,15 @@ assert.equal(/[#\w]+/.test('#0aA_#'), true);
 
 // regexp quantifier
 
-assert.equal(/x*y/.test('y'), true); // 0 or more times of x.
+assert.equal(/x*y/.test('y'), true); // { 0, }
 assert.equal(/x*y/.test('xy'), true);
 assert.equal(/x*y/.test('xxy'), true);
 
-assert.equal(/x+y/.test('y'), false); // 1 or more times of x.
+assert.equal(/x+y/.test('y'), false); // { 1, }
 assert.equal(/x+y/.test('xy'), true);
 assert.equal(/x+y/.test('xxy'), true);
 
-assert.equal(/x?y/.test('y'), true); // 0 or 1 time of x.
+assert.equal(/x?y/.test('y'), true); // { 0, 1 }
 assert.equal(/x?y/.test('xy'), true);
 
 assert.equal(/x{3}y/.test('xy'), false); // exactly n occurrences of x.
@@ -174,6 +174,9 @@ assert.equal(/x{3}y/.test('xxxy'), true);
 assert.equal(/x{2,3}y/.test('xy'), false);
 assert.equal(/x{2,3}y/.test('xxy'), true);
 assert.equal(/x{2,3}y/.test('xxxy'), true);
+
+assert.deepEqual('aaa'.match(/a+/g), [ 'aaa' ]); // greedy
+assert.deepEqual('aaa'.match(/a+?/g), [ 'a', 'a', 'a' ]); // lazy, as few as possible
 
 
 // sample
