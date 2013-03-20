@@ -85,7 +85,7 @@ assert.ok(obj instanceof Proto);
 // creating object with closure
 
 var obj = (function () {
-	var x = 30; // x is hidden
+	var x = 30;
 
 	return {
 		getX: function () {
@@ -165,33 +165,6 @@ for (var i = 0; i < pl.length; i ++) {
 }
 
 assert.deepEqual(r, [ 'b', 20, 'c', 30 ]);
-
-
-// method on object local
-
-var obj = {
-	f: function () {
-		this.a = 10;
-	}
-};
-
-obj.f();
-assert.equal(obj.a, 10);
-
-
-// method on prototype
-
-var Obj = function (name) {
-	this.name = name;
-}
-
-Obj.prototype.goodDay = function () {
-	return this.name + ', good day';
-}
-
-var obj = new Obj('dave');
-
-assert.equal(obj.goodDay(), 'dave, good day');
 
 
 // getters, setters

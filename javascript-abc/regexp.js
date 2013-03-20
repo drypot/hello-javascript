@@ -71,88 +71,109 @@ assert.deepEqual('xxyyzz'.split(/y+/), [ 'xx', 'zz' ]);
 
 // pattern
 
+// regexp choice : regexp sequence | regexp sequence
 
-// regexp factor
-
-//	a : character
-//
-//	(x) : group, matche x and remember it.
-//
-
-//	\0 : \u0000
-//
-//	\0377 : octal
-//
-//	\xAF :
-//
-//	\u0041 :
-
-//	[abc] : any enclosed character. special characters do not have any special meaning.
-//
-//	[a-d] : [abcd]
-//
-//	[^abc] : negated
-//
-//	[\b] : backspace
-//
-//	\b : word boundary
-//
-//	\B : not \b
-//
-//	\cX : control character, A~Z
-//
-//	\d : [0-9]
-//
-//	\D : [~0-9]
-//
-//	\f :
-//
-//	\n :
-//
-//	\r :
-//
-//	\s : [ \f\n\r\t\v]
-//
-//	\S : [^ \f\n\r\t\v]
-//
-//	\t :
-//
-//	\v :
-//
-//	\w : [A-Za-z0-9_]
-//
-//	\W : [^A-Za-z0-9_]
+assert.equal(/abc|def/.test('abc'), true);
+assert.equal(/abc|def/.test('def'), true);
+assert.equal(/abc|def/.test('xyz'), false);
 
 
+// regexp sequence : (regexp factor (regexp quantifier)) *
 
-//	^ : beginning of input, immediately after a line break.
-//
-//	$ : end of input, immediately before a line break.
-//
-//	x* : 0 or more times of x.
-//
-//	x+ : 1 or more times of x.
-//
-//	x? : 0 or 1 time of x.
-//
-//	x{n} : exactly n occurrences of x.
-//
-//	x{n,m} :
-//
-//	. : any single character except the newline.
-//
-//
-//	(?:x) : matche x but do not remember.
-//
-//	x(?=y) : lookahead. matche x only if x is followed by y.
-//
-//	x(?!y) : negated lookahead.
-//
-//	x|y : x or y
-//
-//
-//	...(x)...\1... : back reference
-//
+assert.equal(/a+bc?/.test('ab'), true);
+assert.equal(/a+bc?/.test('aab'), true);
+assert.equal(/a+bc?/.test('aabc'), true);
+
+
+// regexp factor : charactor, escape, class, group
+
+assert.equal(/A/.test('A'), true); // characters
+
+assert.equal(/^abc/.test('abc def'), true); // match beginning of line
+assert.equal(/^abc/.test('def abc'), false);
+
+assert.equal(/abc$/.test('abc def'), false); // match end of line
+assert.equal(/abc$/.test('def abc'), true);
+
+assert.equal(/a.c/.test('abc'), true); // match any single character except the newline
+
+// escape
+
+assert.equal(/\u0041/.test('\u0041'), true); // unicode
+assert.equal(/\xAF/.test('\xAF'), true); // hex
+
+//assert.equal(/\0101/.test('\101')); // octal pattern not compatible between engines, don't use.
+//assert.equal(/\0/.test('\u0000'));
+
+assert.equal(/\./.test('.'), true); // special characters : \ / [ ] ( ) { } ? + * | . ^ $
+
+assert.equal(/\f\n\r\t\v/.test('\f\n\r\t\v'), true);
+
+assert.equal(/\bcd/.test('ab cd'), true); // \b : word boundary, USELESS for multilingual applications
+assert.equal(/\bcd/.test('abcd'), false);
+assert.equal(/\Bcd/.test('abcd'), true);
+
+assert.equal(/\d+/.test('123'), true); // \d : [0-9]
+assert.equal(/\D+/.test('abc'), true);
+
+assert.equal(/\s+/.test(' \n\t'), true); // \s : [\f\n\r\t\u000B\u0020\u00A0\u2028\u2029], partial of Unicode whitespaces.
+assert.equal(/\S+/.test('abc'), true);
+
+assert.equal(/\w+/.test('0A_'), true); // \w : [0-9A-Z_a-z]
+assert.equal(/\W+/.test('-!@'), true);
+
+assert.equal(/\cJ/.test('\n'), true); // \cA ~ \cZ : control character
+
+// group
+
+assert.equal(/(abc) \1/.test('abc abc'), true); // capturing, \1 \2 \3 ... : back reference
+
+assert.equal(/(?:abc)/.test('abc'), true); // noncapturing, faster
+
+assert.equal(/abc(?=123)/.test('abc123'), true); // lookahead. matches x only if y follows.
+assert.equal(/abc(?=123)/.test('abcdef'), false);
+
+assert.equal(/abc(?!123)/.test('abc123'), false); // negative lookahead. matches x only if y does not follow.
+assert.equal(/abc(?!123)/.test('abcdef'), true);
+
+// class
+
+assert.equal(/[abcd]+/.test('aabbccdd'), true);
+assert.equal(/[a-d]+/.test('aabbccdd'), true); // range
+assert.equal(/[^a-d]+/.test('123!*'), true); // negative
+
+assert.equal(/[\u0061-\u0064]+/.test('aabbccdd'), true);
+
+assert.equal(/[x\-]+/.test('x---x'), true);  // class specials      : \ / [ ] - ^
+assert.equal(/[x?+*]+/.test('x?+*x'), true); // cf, factor specials : \ / [ ] ( ) { } ? + * | . ^ $
+
+assert.equal(/[x\f\n\r\t\v]+/.test('x\f\n\r\t\vx'), true);
+assert.equal(/[x\b]+/.test('x\bx'), true); // backspace
+
+assert.equal(/[x\d]+/.test('x123x'), true);
+assert.equal(/[x\s]+/.test('x \n\tx'), true);
+assert.equal(/[#\w]+/.test('#0aA_#'), true);
+
+
+// regexp quantifier
+
+assert.equal(/x*y/.test('y'), true); // 0 or more times of x.
+assert.equal(/x*y/.test('xy'), true);
+assert.equal(/x*y/.test('xxy'), true);
+
+assert.equal(/x+y/.test('y'), false); // 1 or more times of x.
+assert.equal(/x+y/.test('xy'), true);
+assert.equal(/x+y/.test('xxy'), true);
+
+assert.equal(/x?y/.test('y'), true); // 0 or 1 time of x.
+assert.equal(/x?y/.test('xy'), true);
+
+assert.equal(/x{3}y/.test('xy'), false); // exactly n occurrences of x.
+assert.equal(/x{3}y/.test('xxxy'), true);
+
+assert.equal(/x{2,3}y/.test('xy'), false);
+assert.equal(/x{2,3}y/.test('xxy'), true);
+assert.equal(/x{2,3}y/.test('xxxy'), true);
 
 
 // sample
@@ -161,3 +182,8 @@ assert.deepEqual('xxyyzz'.split(/y+/), [ 'xx', 'zz' ]);
 var parseUrl = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/;
 
 var parseNumber = /^-?\d+(?:\.\d*)?(?:e[+\-]?\d+)?$/i;
+
+// 32 ASCII special characters
+var specials = /(?:!|"|#|\$|%|&|'|\(|\)|\*|\+|,|-|\.|\/|:|;|<|=|>|@|\[|\\|]|\^|_|`|\{|\||\}|~)/;
+var specials = /[!-\/:-@\[-`{-~]/;
+
