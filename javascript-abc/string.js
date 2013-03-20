@@ -21,7 +21,7 @@ assert.equal('37' + 7, '377');
 
 // string object
 
-assert.equal(typeof new String('abc'), 'object');
+assert.equal(typeof new String('abc'), 'object'); // don’t use new Boolean, new Number, new String.
 
 assert.equal('seven'.length, 5); // string literal automatically converted to a temporary String object.
 
