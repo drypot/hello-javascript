@@ -19,6 +19,15 @@ assert.equal(isNaN(parseInt('')), true);
 
 assert.equal(parseFloat('11.1'), 11.1);
 
+assert.equal(Number('11'), 11);
+assert.equal(Number('11.1'), 11.1);
+assert.equal(isNaN(Number('11xx')), true);
+assert.equal(isNaN(Number('xx')), true);
+assert.equal(Number(''), 0);
+
+assert.equal(typeof new Number('11.1'), 'object'); // DO NOT USE
+assert.equal(new Number('11.1').valueOf(), 11.1);
+
 assert.equal(typeof '11', 'string');
 assert.equal(typeof +'11', 'number');
 
