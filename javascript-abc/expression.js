@@ -1,135 +1,138 @@
+var assert = require('assert');
+
+
 // literal, name
 
-console.log(0); // 0
+assert.equal(typeof 0, 'number');
 
-console.log(NaN); // NaN
+assert.equal(typeof console, 'object');
 
 
 // ()
 
-console.log((10 + 20) * 3); // 90
+assert.equal(typeof ((10 + 20) * 30), 'number');
 
 
 // member, new
 
-console.log({ x : 101 }.x); // 101
-console.log([ 101, 102, 103][1]); // 102
-console.log(new Object()); // {}
+assert.equal(typeof Math.PI, 'number');
+assert.equal(typeof Math['PI'], 'number');
+
+assert.equal(typeof new Object, 'object');
 
 
 // function call
 
-console.log(parseInt('200')); // 200
+assert.equal(parseInt('200'), 200);
 
 
 // increment, decrement
 
 var x = 300;
-console.log(x++);
-console.log(x--);
+assert.equal(++x, 301);
+assert.equal(--x, 300);
 
 
 // unary
 
-console.log(!true); // logical not
-console.log(~1); // bitwise not
+assert.equal(!true, false); // logical not
+assert.equal(~1, -2); // bitwise not
 
-console.log(+10);
-console.log(-10);
+assert.equal(+10, 10);
+assert.equal(-10, -10);
 
-console.log(typeof 10); // 'number'
+assert.equal(typeof 10, 'number');
 
-console.log(delete { x: 10 }.x); // true
-console.log(delete { x: 10 }.y); // true
+assert.equal(delete { x: 10 }.x, true);
+assert.equal(delete { x: 10 }.y, true);
 
-console.log(void (function () {
-	console.log('in void');
-	return 'out void';
-})()); // 'in void', undefined, void evaluates expression but not return value
+assert.equal(void 'I am here', undefined);
 
 
 // multiplication
 
-console.log(55 * 10); // 550
-console.log(55 / 10); // 5.5
-console.log(55 % 10); // 5
+assert.equal(55 * 10, 550);
+assert.equal(55 / 10, 5.5);
+assert.equal(55 % 10, 5);
 
 
 // addition
 
-console.log(55 + 10);
-console.log(55 - 10);
+assert.equal(55 + 10, 65);
+assert.equal(55 - 10, 45);
 
 
 // bitwise shift
 
-console.log(1 << 3);  // 8
-console.log(8 >> 3);  // 1
+assert.equal(1 << 3, 8);
+assert.equal(8 >> 3, 1);
 
-console.log(-1 << 3); // -8
-console.log(-8 >> 3); // -1, sign reserved
-console.log(-8 >>> 3); // 536870911, zero filled
+assert.equal(-1 << 3, -8);
+assert.equal(-8 >> 3, -1); // sign reserved
+assert.equal(-8 >>> 3, 536870911); // zero filled
 
 
 // relational
 
-console.log(10 >= 5);
-console.log(10 <= 5);
-console.log(10 > 5);
-console.log(10 < 5);
+assert.equal(10 >= 5, true);
+assert.equal(10 <= 5, false);
+assert.equal(10 > 5, true);
+assert.equal(10 < 5, false);
 
-console.log('NaN' in global); // true
+assert.equal('NaN' in global, true);
 
-console.log('string' instanceof String); // false
-console.log(new String('string') instanceof String); // true
+assert.equal('string' instanceof String, false);
+assert.equal(new String('string') instanceof String, true);
 
 
 // equality
 
-console.log(10 == '10'); // true
-console.log(10 != '10'); // false
+assert.equal(10 == '10', true);
+assert.equal(10 != '10', false);
 
-console.log(10 === '10'); // false
-console.log(10 !== '10'); // true
+assert.equal(10 === '10', false);
+assert.equal(10 !== '10', true);
 
 
 // bitwise and
 
-console.log(7 & 2); // 2, bitwise operators treat operands as 32 bits
+assert.equal(7 & 2, 2); // bitwise operators treat operands as 32 bits
 
 
 // bitwise xor
 
-console.log(7 ^ 2); // 5
+assert.equal(7 ^ 2, 5);
 
 
 // bitwise or
 
-console.log(4 | 2); // 6
+assert.equal(4 | 2, 6);
 
 
 // logical and
 
-console.log(true && 10); // 10
-console.log(false && 10); // false
+assert.equal(true && 10, 10);
+assert.equal(false && 10, false);
 
 
 // logical or
 
-console.log(10 || 20); // 10
-console.log(false || 20); // 20
+assert.equal(10 || 20, 10);
+assert.equal(false || 20, 20);
 
 
 // conditional
 
-console.log(true ? 40 : 50); // 40
+assert.equal(true ? 40 : 50, 40);
 
 
 // assignment
 
-console.log(x = 60); // 60
+var x;
+
+assert.equal(x = 60, 60);
 
 
 // comma
 
-console.log((70, 80, 90)); // 90
+assert.equal((70, 80, 90), 90);
