@@ -11,11 +11,14 @@ assert.equal(10, 10);   // base 10
 assert.equal(010, 8);   // base 8
 assert.equal(0x10, 16); // base 16
 
-assert.equal(parseInt('11'), 11);
+assert.equal(parseInt('11'), 11); // bad
 assert.equal(parseInt('11.1'), 11);
 assert.equal(parseInt('11xx'), 11);
 assert.equal(isNaN(parseInt('xx')), true);
 assert.equal(isNaN(parseInt('')), true);
+
+assert.equal(parseInt('08'), 0); // bad
+assert.equal(parseInt('08', 10), 8); // good
 
 assert.equal(parseFloat('11.1'), 11.1);
 
@@ -23,7 +26,7 @@ assert.equal(Number('11'), 11);
 assert.equal(Number('11.1'), 11.1);
 assert.equal(isNaN(Number('11xx')), true);
 assert.equal(isNaN(Number('xx')), true);
-assert.equal(Number(''), 0);
+assert.equal(Number(''), 0); // cf:parseInt('') is NaN
 
 assert.equal(typeof new Number('11.1'), 'object'); // DO NOT USE
 assert.equal(new Number('11.1').valueOf(), 11.1);

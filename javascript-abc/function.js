@@ -8,6 +8,7 @@ function returnNothing() {
 
 assert.equal(returnNothing(), undefined);
 assert.equal(returnNothing.__proto__, Function.prototype);
+assert.equal(returnNothing.name, 'returnNothing');
 
 function square(number) {
 	return number * number;
@@ -21,6 +22,7 @@ assert.equal(square(10), 100);
 var slow = new Function('a', 'return a * a * a;');
 
 assert.equal(slow(2), 8);
+assert.equal(slow.name, '');
 
 
 // creating anonymous function
@@ -30,6 +32,7 @@ var squareAnony = function (number) {
 };
 
 assert.equal(squareAnony(7), 49);
+assert.equal(squareAnony.name, '');
 
 
 // named anonymous function to refer itself
@@ -39,6 +42,7 @@ var factorial = function fac(n) { //
 };
 
 assert.equal(factorial(3), 6);
+assert.equal(factorial.name, 'fac');
 
 
 // creating function with closure
