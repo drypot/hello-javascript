@@ -9,11 +9,15 @@ function returnNothing() {
 assert.equal(typeof returnNothing, 'function');
 assert.equal(returnNothing.__proto__, Function.prototype);
 assert.equal(returnNothing.name, 'returnNothing');
+assert.equal(returnNothing.length, 0);
 assert.equal(returnNothing(), undefined);
 
 function square(number) {
 	return number * number;
 }
+
+assert.equal(square.name, 'square');
+assert.equal(square.length, 1);
 
 assert.equal(square(10), 100);
 
