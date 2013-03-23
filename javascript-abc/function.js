@@ -54,7 +54,7 @@ assert.equal(factorial(3), 6);
 
 var outer = function (x) {
 	assert.equal(y, undefined);
-	//assert.equal(r, undefined); // error, r is not defined.
+	//assert.equal(r, undefined); // throws error, r is not defined.
 
 	var y = 20;
 
@@ -63,7 +63,7 @@ var outer = function (x) {
 		assert.equal(y, 20);
 		assert.equal(z, 30);
 		assert.equal(t, undefined);
-		//assert.equal(r, undefined); // error, r is not defined.
+		//assert.equal(r, undefined); // throws error, r is not defined.
 		return 'ok';
 	};
 	var z = 30;
