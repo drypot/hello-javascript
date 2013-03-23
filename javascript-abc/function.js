@@ -52,14 +52,28 @@ assert.equal(factorial(3), 6);
 
 // creating function with closure
 
-var xyAdder = function (x) {
+var outer = function (x) {
+	assert.equal(y, undefined);
+	//assert.equal(r, undefined); // error, r is not defined.
+
 	var y = 20;
-	return function () {
-		return x + y;
+
+	var inner = function () {
+		assert.equal(x, 10);
+		assert.equal(y, 20);
+		assert.equal(z, 30);
+		assert.equal(t, undefined);
+		//assert.equal(r, undefined); // error, r is not defined.
+		return 'ok';
 	};
+	var z = 30;
+
+	return inner;
+
+	var t = 40;
 }
 
-assert.equal(xyAdder(10)(), 30);
+assert.equal(outer(10)(), 'ok');
 
 
 // this in normal function
@@ -82,7 +96,7 @@ assert.equal(new Constructor().x, 10);
 
 // this in method
 
-var foo = {
+var obj = {
 	method1: function () {
 		return this;
 	},
@@ -101,9 +115,9 @@ var foo = {
 	}
 }
 
-assert.equal(foo.method1(), foo);
-assert.equal(foo.method2(), global);
-assert.equal(foo.method3(), foo);
+assert.equal(obj.method1(), obj);
+assert.equal(obj.method2(), global);
+assert.equal(obj.method3(), obj);
 
 
 // this on apply invocation
