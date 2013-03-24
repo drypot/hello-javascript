@@ -167,6 +167,21 @@ function pass() {
 assert.deepEqual(pass('d', 'e', 'f'), [ 'd', 'e', 'f' ]);
 
 
+// bind
+
+var obj = {
+	x : 'x'
+};
+
+var func = function (y, z) {
+	return this.x + y + z;
+};
+
+var func2 = func.bind(obj, 'y');
+
+assert.equal(func2('z'), 'xyz');
+
+
 // memoization
 
 var sum = (function () {
