@@ -167,6 +167,16 @@ function pass() {
 assert.deepEqual(pass('d', 'e', 'f'), [ 'd', 'e', 'f' ]);
 
 
+// making arguments as array
+
+var func = function () {
+	var _args = Array.prototype.slice.call(arguments);
+	return _args.concat([4, 5, 6]);
+};
+
+assert.deepEqual(func(1, 2, 3), [ 1, 2, 3, 4, 5, 6 ]);
+
+
 // bind
 
 var obj = {

@@ -158,25 +158,27 @@ assert.deepEqual(a.concat([ 4, 5 ], [ 6, 7 ]), [ 1, 2, 9, 4, 5, 6, 7 ]);
 
 assert.deepEqual(a.join('-'), '1-2-9');
 
-var a = [ '0', '1', '2', '3', '4' ];
+var a = [ 0, 1 , 2, 3, 4 ];
 
-assert.deepEqual(a.slice(1, 3), [ '1', '2' ]);
-assert.deepEqual(a, [ '0', '1', '2', '3', '4' ]);
+assert.deepEqual(a.slice(), [ 0, 1, 2, 3, 4 ]);
+assert.deepEqual(a.slice(1), [ 1, 2, 3, 4 ]);
+assert.deepEqual(a.slice(1, 3), [ 1, 2 ]);
+assert.deepEqual(a, [ 0, 1, 2, 3, 4 ]);
 
-var a = [ '0', '1', '2', '3', '4' ];
+var a = [ 0, 1, 2, 3, 4 ];
 
-assert.deepEqual(a.splice(1, 3), [ '1', '2', '3' ]);
-assert.deepEqual(a, [ '0', '4' ]);
+assert.deepEqual(a.splice(1, 3), [ 1, 2, 3 ]);
+assert.deepEqual(a, [ 0, 4 ]);
 
-var a = [ '0', '1', '2', '3', '4' ];
+var a = [ 0, 1, 2, 3, 4 ];
 
-assert.deepEqual(a.splice(1, 3, 77, 99), [ '1', '2', '3' ]);
-assert.deepEqual(a, [ '0', 77, 99, '4' ]);
+assert.deepEqual(a.splice(1, 3, 77, 99), [ 1, 2, 3 ]);
+assert.deepEqual(a, [ 0, 77, 99, 4 ]);
 
-var a = [ '0', '1', '2', '3', '4' ];
+var a = [ 0, 1, 2, 3, 4 ];
 
-assert.deepEqual(a.splice(1, 3, [ 77, 99 ]), [ '1', '2', '3' ]);
-assert.deepEqual(a, [ '0', [ 77, 99 ], '4' ]);
+assert.deepEqual(a.splice(1, 3, [ 77, 99 ]), [ 1, 2, 3 ]);
+assert.deepEqual(a, [ 0, [ 77, 99 ], 4 ]);
 
 
 // searching
