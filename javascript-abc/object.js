@@ -14,6 +14,10 @@ assert.equal('undefined' in global, true, 'undefined is a property of global');
 var obj = {};
 
 assert.equal(obj.__proto__, Object.prototype);
+assert.equal(obj.hasOwnProperty('constructor'), false);
+
+assert.equal(Object.prototype.constructor, Object);
+assert.equal(Object.prototype.hasOwnProperty('constructor'), true);
 
 
 var obj = {
@@ -58,8 +62,8 @@ Obj.prototype.getX = function () {
 
 var obj = new Obj();
 
-assert.equal(Obj.prototype.constructor, Obj);
 assert.equal(obj.__proto__, Obj.prototype);
+assert.equal(Obj.prototype.constructor, Obj);
 
 assert.equal(obj.x, 10);
 assert.equal(obj.getX(), 11);
