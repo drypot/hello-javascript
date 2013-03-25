@@ -1,71 +1,67 @@
 var assert = require('assert');
 
-// creating function
+// creating named function
 
-function returnNothing() {
+function funcNamed() {
 	return;
 }
 
-assert.equal(typeof returnNothing, 'function');
-assert.equal(returnNothing.__proto__, Function.prototype);
-assert.equal(returnNothing.name, 'returnNothing');
-assert.equal(returnNothing.length, 0);
-assert.equal(returnNothing(), undefined);
+assert.equal(typeof funcNamed, 'function');
+assert.equal(funcNamed.__proto__, Function.prototype);
 
-function square(number) {
-	return number * number;
-}
-
-assert.equal(square.name, 'square');
-assert.equal(square.length, 1);
-
-assert.equal(square(10), 100);
-
-
-// creating function with constructor, inefficient.
-
-var slow = new Function('a', 'return a * a * a;');
-
-assert.equal(slow.name, '');
-assert.equal(slow(2), 8);
+assert.equal(funcNamed.name, 'funcNamed');
+assert.equal(funcNamed.length, 0);
+assert.equal(funcNamed(), undefined);
 
 
 // creating anonymous function
 
-var squareAnony = function (number) {
-	return number * number
+var func = function () {
+	return;
 };
 
-assert.equal(squareAnony.name, '');
-assert.equal(squareAnony(7), 49);
+assert.equal(func.name, '');
+assert.equal(func.length, 0);
+assert.equal(func(), undefined);
+
+var func = function (x) {
+	return x;
+};
+
+assert.equal(func.name, '');
+assert.equal(func.length, 1);
+assert.equal(func(10), 10);
 
 
 // named anonymous function to refer itself
 
-var factorial = function fac(n) { //
+var func = function fac(n) { //
 	return n < 2 ? 1 : n * fac(n - 1);
 };
 
-assert.equal(factorial.name, 'fac');
-assert.equal(factorial(3), 6);
+assert.equal(func.name, 'fac');
+assert.equal(func(3), 6);
 
 
 // creating function with closure
 
-var outer = function (x) {
+var func = function (x) {
+
 	assert.equal(y, undefined);
 	//assert.equal(r, undefined); // throws error, r is not defined.
 
 	var y = 20;
+
+	assert.equal(y, 20);
 
 	var inner = function () {
 		assert.equal(x, 10);
 		assert.equal(y, 20);
 		assert.equal(z, 30);
 		assert.equal(t, undefined);
-		//assert.equal(r, undefined); // throws error, r is not defined.
 		return 'ok';
 	};
+
 	var z = 30;
 
 	return inner;
@@ -73,28 +69,36 @@ var outer = function (x) {
 	var t = 40;
 }
 
-assert.equal(outer(10)(), 'ok');
+assert.equal(func(10)(), 'ok');
 
 
-// this in normal function
+// creating function with constructor, inefficient.
 
-function func() {
+var func = new Function('a', 'return a * a * a;');
+
+assert.equal(func.name, '');
+assert.equal(func(2), 8);
+
+
+// function as normal
+
+var func = function () {
 	return this;
 }
 
 assert.equal(func(), global);
 
 
-// this in constructor
+// function as constructor
 
-var Constructor = function () {
+var Obj = function () {
 	this.x = 10;
 }
 
-assert.equal(new Constructor().x, 10);
+assert.equal(new Obj().x, 10);
 
 
-// this in method
+// function as method
 
 var obj = {
 	method1: function () {
@@ -120,34 +124,35 @@ assert.equal(obj.method2(), global);
 assert.equal(obj.method3(), obj);
 
 
-// this on apply invocation
+// function through apply
 
-var xy = { x: 10, y: 20 };
+var obj = { x: 10, y: 20 };
 
-var sumXyCd = function (c, d) {
+var func = function (c, d) {
 	return this.x + this.y + c + d;
 }
 
-assert.equal(sumXyCd.apply(xy, [ 30, 40 ]), 100);
-assert.equal(sumXyCd.call(xy, 30, 40), 100);
+assert.equal(func.apply(obj, [ 30, 40 ]), 100);
+assert.equal(func.call(obj, 30, 40), 100);
 
 
 // function as arguments
 
-function mother(a, fn) {
-	return fn(a);
+var callback = function (x) {
+	return x * 10;
 }
 
-function gift(a) {
-	return a * 10;
+var func = function (fn) {
+	return fn(10);
 }
 
-assert.equal(mother(10, gift), 100);
+
+assert.equal(func(callback), 100);
 
 
 // arguments are maintained in an array-like object.
 
-function print() {
+var func = function () {
 	var r = [];
 	for (var i = 0; i < arguments.length; i++) {
 		r.push(arguments[i]);
@@ -155,16 +160,17 @@ function print() {
 	return r;
 }
 
-assert.deepEqual(print('a', 'b', 'c'), [ 'a', 'b', 'c' ]);
+assert.deepEqual(func('a', 'b', 'c'), [ 'a', 'b', 'c' ]);
 
 
 // passing arguments through
 
-function pass() {
-	return print.apply(this, arguments);
+var func = function () {
+	return String.prototype.concat.apply('abc', arguments);
 }
 
-assert.deepEqual(pass('d', 'e', 'f'), [ 'd', 'e', 'f' ]);
+assert.equal('abc'.concat('d', 'e', 'f'), 'abcdef');
+assert.equal(func('d', 'e', 'f'), 'abcdef');
 
 
 // making arguments as array
@@ -187,26 +193,8 @@ var func = function (y, z) {
 	return this.x + y + z;
 };
 
-var func2 = func.bind(obj, 'y');
-
-assert.equal(func2('z'), 'xyz');
-
-
-// memoization
-
-var sum = (function () {
-	var memo = [0];
-	return function sum(n) {
-		var result = memo[n];
-		if (typeof result !== 'number') {
-			memo[n] = result = n + sum(n-1);
-		}
-		return result;
-	};
-}());
-
-assert.equal(sum(0), 0);
-assert.equal(sum(3), 6);
+assert.equal(func.bind(obj)('y' ,'z'), 'xyz');
+assert.equal(func.bind(obj, 'y')('z'), 'xyz');
 
 
 // function declaration can be below the call
@@ -228,7 +216,7 @@ if (true){
 
 // dump function source
 
-assert.equal(typeof pass.toString(), 'string');
+assert.equal(typeof func.toString(), 'string');
 
 
 // function object creation

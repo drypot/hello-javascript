@@ -158,20 +158,20 @@ assert.equal(/[#\w]+/.test('#0aA_#'), true);
 // regexp quantifier
 
 assert.equal(/x*y/.test('y'), true); // { 0, }
-assert.equal(/x*y/.test('xy'), true);
+assert.equal(/x*y/.test('obj'), true);
 assert.equal(/x*y/.test('xxy'), true);
 
 assert.equal(/x+y/.test('y'), false); // { 1, }
-assert.equal(/x+y/.test('xy'), true);
+assert.equal(/x+y/.test('obj'), true);
 assert.equal(/x+y/.test('xxy'), true);
 
 assert.equal(/x?y/.test('y'), true); // { 0, 1 }
-assert.equal(/x?y/.test('xy'), true);
+assert.equal(/x?y/.test('obj'), true);
 
-assert.equal(/x{3}y/.test('xy'), false); // exactly n occurrences of x.
+assert.equal(/x{3}y/.test('obj'), false); // exactly n occurrences of x.
 assert.equal(/x{3}y/.test('xxxy'), true);
 
-assert.equal(/x{2,3}y/.test('xy'), false);
+assert.equal(/x{2,3}y/.test('obj'), false);
 assert.equal(/x{2,3}y/.test('xxy'), true);
 assert.equal(/x{2,3}y/.test('xxxy'), true);
 
