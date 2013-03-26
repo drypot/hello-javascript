@@ -248,4 +248,34 @@ assert.deepEqual(obj, { b: 20 });
 	}
 })();
 
-// TODO: 셈플 코드
+var Proto = Object.subClass({
+	init: function(name) {
+		this.name = name;
+	},
+	getColored: function() {
+		return 'red ' + this.name;
+	}
+});
+
+var Obj = Proto.subClass({
+	init: function() {
+		this._super('bird');
+	},
+	getColored: function() {
+		return 'blue ' + this._super();
+	},
+	flyable: function() {
+		return true;
+	}
+});
+
+var proto = new Proto('dog');
+
+assert.equal(proto.name, 'dog');
+assert.equal(proto.getColored(), 'red dog');
+
+var obj = new Obj();
+
+assert.equal(obj.name, 'bird');
+assert.equal(obj.getColored(), 'blue red bird');
+assert.equal(obj.flyable(), true);
