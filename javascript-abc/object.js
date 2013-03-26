@@ -78,7 +78,7 @@ var Obj = function () {
 	this.x = 30;
 }
 
-Obj.prototype = new Proto();
+Obj.prototype = new Proto(); // constructor 프로퍼티가 소실되는데 쓰이는 곳이 거의 없는 듯 하다.
 
 var obj = new Obj();
 
