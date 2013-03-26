@@ -82,8 +82,11 @@ Obj.prototype = new Proto();
 
 var obj = new Obj();
 
-assert.ok(obj instanceof Obj);
-assert.ok(obj instanceof Proto);
+assert.equal(obj instanceof Obj, true);
+assert.equal(obj.__proto__, Obj.prototype);
+
+assert.equal(obj instanceof Proto, true);
+assert.equal(obj.__proto__.__proto__, Proto.prototype);
 
 
 // creating object with closure
@@ -200,7 +203,6 @@ var obj = { a: 10, b: 20 };
 
 delete obj.a;
 assert.deepEqual(obj, { b: 20 });
-
 
 
 // http://ejohn.org/blog/simple-javascript-inheritance/
