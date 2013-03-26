@@ -87,6 +87,8 @@ assert.equal(/a+bc?/.test('aabc'), true);
 
 // regexp factor : charactor, escape, class, group
 
+// character
+
 assert.equal(/A/.test('A'), true); // characters
 
 assert.equal(/^abc/.test('abc def'), true); // match beginning of line
