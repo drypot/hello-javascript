@@ -78,12 +78,15 @@ var Obj = function () {
 	this.x = 30;
 }
 
-Obj.prototype = new Proto();
+Obj.prototype = new Proto(); // constructor 프로퍼티가 소실되는데 쓰이는 곳이 거의 없는 듯 하다.
 
 var obj = new Obj();
 
-assert.ok(obj instanceof Obj);
-assert.ok(obj instanceof Proto);
+assert.equal(obj instanceof Obj, true);
+assert.equal(obj.__proto__, Obj.prototype);
+
+assert.equal(obj instanceof Proto, true);
+assert.equal(obj.__proto__.__proto__, Proto.prototype);
 
 assert.equal(obj.constructor, Proto.prototype.constructor);
 
@@ -204,7 +207,6 @@ delete obj.a;
 assert.deepEqual(obj, { b: 20 });
 
 
-
 // http://ejohn.org/blog/simple-javascript-inheritance/
 
 (function () {
@@ -248,4 +250,34 @@ assert.deepEqual(obj, { b: 20 });
 	}
 })();
 
-// TODO: 셈플 코드
+var Proto = Object.subClass({
+	init: function(name) {
+		this.name = name;
+	},
+	getColored: function() {
+		return 'red ' + this.name;
+	}
+});
+
+var Obj = Proto.subClass({
+	init: function() {
+		this._super('bird');
+	},
+	getColored: function() {
+		return 'blue ' + this._super();
+	},
+	flyable: function() {
+		return true;
+	}
+});
+
+var proto = new Proto('dog');
+
+assert.equal(proto.name, 'dog');
+assert.equal(proto.getColored(), 'red dog');
+
+var obj = new Obj();
+
+assert.equal(obj.name, 'bird');
+assert.equal(obj.getColored(), 'blue red bird');
+assert.equal(obj.flyable(), true);
