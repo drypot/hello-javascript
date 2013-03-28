@@ -85,6 +85,8 @@ var obj = new Obj();
 assert.ok(obj instanceof Obj);
 assert.ok(obj instanceof Proto);
 
+assert.equal(obj.constructor, Proto.prototype.constructor);
+
 
 // creating object with closure
 
