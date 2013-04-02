@@ -2,7 +2,6 @@ var http = require('http');
 var should = require('should');
 var request = require('request');
 var util = require('util');
-var test = require('../main/test.js');
 
 var server = http.createServer();
 

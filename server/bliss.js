@@ -1,7 +1,7 @@
 var _ = require('underscore');
 var express = require('express');
 var Bliss = require('bliss');
-var l = require('../main/l.js');
+var l = {};
 
 var e = express();
 
