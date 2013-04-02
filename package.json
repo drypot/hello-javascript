@@ -15,6 +15,7 @@
   "readmeFilename": "readme.md",
   "gitHead": "b752a19abc888c627d01278e18ddbb22556beeeb",
   "dependencies": {
-    "should": "~1.2.2"
+    "should": "~1.2.2",
+    "bcrypt": "~0.7.5"
   }
 }
