@@ -69,6 +69,8 @@ assert.equal(obj.x, 10);
 assert.equal(obj.getX(), 11);
 
 
+// inheritance type 1
+
 var Proto = function () {
 	this.x = 10;
 	this.y = 20;
@@ -89,6 +91,30 @@ assert.equal(obj instanceof Proto, true);
 assert.equal(obj.__proto__.__proto__, Proto.prototype);
 
 assert.equal(obj.constructor, Proto.prototype.constructor);
+
+assert.equal(obj.x, 30);
+assert.equal(obj.y, 20);
+
+
+// inheritance type 2
+
+var Proto = function () {
+	this.x = 10;
+	this.y = 20;
+}
+
+var Obj = function () {
+	Proto.call(this);
+	this.x = 30;
+}
+
+var obj = new Obj();
+
+assert.equal(obj instanceof Obj, true);
+assert.equal(obj.__proto__, Obj.prototype);
+
+assert.equal(obj.x, 30);
+assert.equal(obj.y, 20);
 
 
 // creating object with closure
