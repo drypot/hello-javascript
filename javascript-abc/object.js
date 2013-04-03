@@ -31,25 +31,6 @@ assert.equal(obj.x, 10);
 assert.equal(obj.getX(), 11);
 
 
-var proto = {
-	x: 10,
-	y: 20
-};
-
-var obj = {
-	x: 30,
-	__proto__: proto
-};
-
-assert.equal(obj.x, 30);
-assert.equal(obj.y, 20);
-
-obj.y = 50;
-
-assert.equal(obj.y, 50);
-assert.equal(proto.y, 20);
-
-
 // creating object with constructor
 
 var Obj = function () {
@@ -67,6 +48,27 @@ assert.equal(Obj.prototype.constructor, Obj);
 
 assert.equal(obj.x, 10);
 assert.equal(obj.getX(), 11);
+
+
+// inheritance type 0
+
+var proto = {
+	x: 10,
+	y: 20
+};
+
+var obj = {
+	x: 30,
+	__proto__: proto
+};
+
+assert.equal(obj.x, 30);
+assert.equal(obj.y, 20);
+
+obj.y = 50;
+
+assert.equal(obj.y, 50);
+assert.equal(proto.y, 20);
 
 
 // inheritance type 1
