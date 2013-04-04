@@ -235,6 +235,41 @@ delete obj.a;
 assert.deepEqual(obj, { b: 20 });
 
 
+// defineProperty
+
+var obj = {};
+
+assert.equal(obj.x, undefined);
+
+Object.defineProperty(obj, "x", {
+	enumerable: true,
+	configurable: false,
+	writable: true,
+	value: 10
+});
+
+Object.defineProperty(obj, "xx", {
+	enumerable: false,
+	configurable: false,
+	get: function () { return this.x + 5; },
+	set: function (value) { this.x = value - 5}
+});
+
+assert.equal('x' in obj, true);
+assert.equal('xx' in obj, true);
+assert.equal('xxx' in obj, false);
+
+assert.deepEqual(obj, { x: 10 });
+
+obj.x = 20;
+assert.equal(obj.x, 20);
+assert.equal(obj.xx, 25);
+
+obj.xx = 50;
+assert.equal(obj.x, 45);
+assert.equal(obj.xx, 50);
+
+
 // http://ejohn.org/blog/simple-javascript-inheritance/
 
 (function () {
