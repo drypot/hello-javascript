@@ -32,6 +32,10 @@ assert.equal(String.fromCharCode(97, 98, 99), 'abc');
 
 assert.equal('ababab'.indexOf('ba'), 1);
 assert.equal('ababab'.indexOf('x'), -1);
+
+assert.equal(!!~'ababab'.indexOf('ba'), true);
+assert.equal(!!~'ababab'.indexOf('x'), false);
+
 assert.equal('ababab'.lastIndexOf('ba'), 3);
 
 assert.equal('ab'.concat('cd', 'ef'), 'abcdef');
