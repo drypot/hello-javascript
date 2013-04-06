@@ -39,6 +39,9 @@ assert.equal(a.length, 3);
 
 // is array ?
 
+assert.equal(Array.isArray([]), true);
+assert.equal(Array.isArray({}), false);
+
 assert.equal(typeof [], 'object');
 assert.equal(Object.prototype.toString.apply([]), '[object Array]');
 
@@ -76,6 +79,9 @@ colors.forEach(function(color) {
 });
 
 assert.deepEqual(r, [ 'red', 'green', 'blue' ]);
+
+
+// functional operation
 
 assert.deepEqual([ 'a', 'b', 'c' ].map(function (item) {
 	return item.toUpperCase();
