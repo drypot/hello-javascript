@@ -30,6 +30,9 @@ describe("tokenizer", function () {
 		tokenize('abc!').should.have.length(1).include('abc');
 		tokenize('hello, world.').should.have.length(2).include('hello').include('world');
 	});
+	it("can pass stop words", function () {
+		tokenize('what a beautiful world it is!').should.have.length(3).include('what').include('beautiful').include('world');
+	});
 	it("can parse multiple arguments", function () {
 		tokenize('abc 123', 'def 123').should.have.length(3).include('abc').include('def').include('123')
 	});
