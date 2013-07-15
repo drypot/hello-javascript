@@ -10,7 +10,7 @@ var re = new RegExp("abc");
 // flag
 
 var re = /abc/g; // global
-var re = /abc/m; // multi line
+var re = /abc/m; // multi line, ^ and $ matches each line delimited by \n or \r.
 var re = /abc/i; // ignore case
 
 

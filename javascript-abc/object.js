@@ -190,6 +190,16 @@ assert.deepEqual(r, [ 'x' ]);
 assert.deepEqual(Object.keys(obj), [ 'x' ]);
 
 
+// enumerating undefined
+
+var count = 0;
+for (var p in undefined) {
+	count++;
+}
+
+assert.equal(count, 0);
+
+
 // enumerating properties selectively
 
 var obj = { a: 10, b: 20, c: 30 };
