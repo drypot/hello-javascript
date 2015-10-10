@@ -5,3 +5,6 @@ assert.equal(typeof false, 'boolean');
 
 assert.equal(typeof new Boolean(false), 'object'); // don't use new Boolean.
 assert.equal(!!new Boolean(false), true);
+
+assert.equal(!!'abc', true);
+assert.equal(!!'', false);

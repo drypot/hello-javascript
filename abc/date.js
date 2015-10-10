@@ -16,6 +16,7 @@ assert.equal(new Date(1995, 11, 25, 13, 30, 0),      'Mon Dec 25 1995 13:30:00 G
 assert.equal(new Date('December 25, 1995'),          'Mon Dec 25 1995 00:00:00 GMT+0900 (KST)');
 assert.equal(new Date('December 25, 1995 13:30:00'), 'Mon Dec 25 1995 13:30:00 GMT+0900 (KST)');
 assert.equal(new Date('1995-12-25 13:30:00'),        'Mon Dec 25 1995 13:30:00 GMT+0900 (KST)');
+assert.equal(new Date('1995-12-25'),                 'Mon Dec 25 1995 09:00:00 GMT+0900 (KST)');
 assert.equal(new Date(819865800000),                 'Mon Dec 25 1995 13:30:00 GMT+0900 (KST)');
 
 assert.equal(Date.parse('December 25, 1995 13:30:00'),       819865800000);
@@ -67,18 +68,22 @@ assert.equal(d.getUTCMilliseconds(), 0);
 
 // toString
 
+var d = new Date(1995, 11, 25, 13, 30, 0);
+
 assert.equal(d.toString(),       'Mon Dec 25 1995 13:30:00 GMT+0900 (KST)');
-assert.equal(d.toLocaleString(), 'Mon Dec 25 1995 13:30:00 GMT+0900 (KST)');
+assert.equal(d.toLocaleString(), '1995-12-25 13:30:00');
 assert.equal(d.toUTCString(),    'Mon, 25 Dec 1995 04:30:00 GMT');
 assert.equal(d.toISOString(),    '1995-12-25T04:30:00.000Z');
 
 assert.equal(d.toDateString(),       'Mon Dec 25 1995');
-assert.equal(d.toLocaleDateString(), 'Monday, December 25, 1995');
+assert.equal(d.toLocaleDateString(), '1995-12-25');
 
 assert.equal(d.toTimeString(),       '13:30:00 GMT+0900 (KST)');
 assert.equal(d.toLocaleTimeString(), '13:30:00');
 
 // toString, Custom
+
+var d = new Date(1995, 11, 25, 13, 30, 0);
 
 function pad(n) {
   var s = "0" + n;
@@ -90,3 +95,16 @@ function formatDateTime (d) {
 };
 
 assert.equal(formatDateTime(d), '1995-12-25 13:30');
+
+// addDays
+
+var d = new Date('1995-12-25 0:0');
+
+d.setDate(d.getDate() + 30);
+assert.equal(d.toLocaleString(), '1996-01-24 00:00:00');
+
+var d = new Date('1995-12-25 0:0');
+
+d.setTime(d.getTime() + 30 * 86400000);
+assert.equal(d.toLocaleString(), '1996-01-24 00:00:00');
+

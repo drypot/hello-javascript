@@ -1,4 +1,4 @@
-var assert = require('assert');
+etvar assert = require('assert');
 
 // null
 
