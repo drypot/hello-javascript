@@ -76,7 +76,7 @@ assert.equal(d.toUTCString(),    'Mon, 25 Dec 1995 04:30:00 GMT');
 assert.equal(d.toISOString(),    '1995-12-25T04:30:00.000Z');
 
 assert.equal(d.toDateString(),       'Mon Dec 25 1995');
-assert.equal(d.toLocaleDateString(), '1995-12-25');
+assert.equal(d.toLocaleDateString(), '1995-12-25'); // 호스트에 따라 달라질 수 있다.
 
 assert.equal(d.toTimeString(),       '13:30:00 GMT+0900 (KST)');
 assert.equal(d.toLocaleTimeString(), '13:30:00');
