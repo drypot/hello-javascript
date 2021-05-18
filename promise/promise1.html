@@ -1,0 +1,21 @@
+<html lang="en">
+<head>
+  <title></title>
+  <script>
+    console.log('v2');
+    console.log('111');
+    let p = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        console.log('222');
+        resolve();
+      }, 3000);
+    });
+    // p.then(() => {
+    //   console.log('333')
+    // });
+  </script>
+</head>
+<body>
+  <h1>Hello Promise</h1>
+</body>
+</html>
