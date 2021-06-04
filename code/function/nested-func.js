@@ -31,7 +31,7 @@ var end = new Date();
 console.log("Test 1: " + (mid - start) + "\nTest 2: " + (end - mid));
 
 //
-// 제 기계에서 결과
+// 내 기계에서 결과
 //
 // Test 1: 18
 // Test 2: 13

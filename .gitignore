@@ -1,8 +1,10 @@
-/.idea/
-/projectFilesBackup/
+.DS_Store
 
+/.idea/
+/.vscode/
 *.sublime-workspace
 
-node_modules/
+/node_modules/
+package-lock.json
 
 /tmp/

@@ -1,3 +1,8 @@
 # JavaScript Study
 
-자바스크립트 학습 위한 테스트 코드들.
+자바스크립트 놀이터.
+
+## License
+
+[MIT](LICENSE)
+
