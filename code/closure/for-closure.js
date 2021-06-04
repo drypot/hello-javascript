@@ -12,10 +12,15 @@ for (let i = 0; i < 5; i++) {
 }
 
 /*
-결과
+
+결과:
 funcs[0] : 0
 funcs[1] : 1
 funcs[2] : 2
 funcs[3] : 3
 funcs[4] : 4
- */
+
+참고:
+https://hacks.mozilla.org/2015/07/es6-in-depth-let-and-const/
+
+*/
