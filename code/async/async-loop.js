@@ -1,4 +1,4 @@
-const fs = require('fs');
+import * as fs from 'fs';
 
 let list = ['callback.js', 'promise.js', 'async.js'];
 let lx = 0;

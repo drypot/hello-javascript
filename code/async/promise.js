@@ -1,4 +1,4 @@
-const fs = require('fs');
+import * as fs from 'fs';
 
 function subA(path, done) {
   console.log('subA 1');
@@ -32,7 +32,7 @@ function main() {
   }).then((stats) => {
     console.log('main 4');
   }).catch((err) => {
-    console.log('system error.');    
+    console.log('system error.');
     process.exit(1);
   });
   console.log('main 2');

@@ -1,4 +1,4 @@
-const fs = require('fs');
+import * as fs from 'fs';
 
 let list = ['callback.js', 'promise.js', 'async.js'];
 let lx = 0;
@@ -47,7 +47,7 @@ function main() {
           if (err) process.exit(1);
           console.log('main 4');
           setImmediate(loop);
-        });          
+        });
       });
     });
   })();

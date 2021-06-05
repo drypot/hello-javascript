@@ -1,4 +1,4 @@
-const fs = require('fs');
+import * as fs from 'fs';
 
 function subA(path, done) {
   console.log('subA 1');
@@ -28,7 +28,7 @@ function main() {
     subB(resolvedPath, (err, stats) => {
       if (err) process.exit(1);
       console.log('main 4');
-    });      
+    });
   });
   console.log('main 2');
 }
